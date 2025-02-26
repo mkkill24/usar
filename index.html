@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Inicio de Sesión</title>
+    <title>Convertidor MXN/USD</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,7 +57,7 @@
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            background-color: #6a0dad; 
+            background-color: #6a0dad;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -66,7 +66,7 @@
         }
 
         button:hover {
-            background-color: #8a2be2; 
+            background-color: #8a2be2;
             transform: translateY(-3px);
         }
 
@@ -97,254 +97,100 @@
             margin: 20px 0;
         }
 
+        /* Media query for horizontal orientation */
         @media (orientation: landscape) {
             body {
-                background-size: contain;
+                background-size: contain; /* Ensure the entire background is visible */
             }
 
             .container {
                 width: 70%;
             }
         }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .captcha {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .refresh-captcha {
-            cursor: pointer;
-            color: #007bff;
-        }
-
-        .refresh-captcha:hover {
-            text-decoration: underline;
-        }
-
-        .loadingspinner {
-          --square: 26px;
-          --offset: 30px;
-          --duration: 2.4s;
-          --delay: 0.2s;
-          --timing-function: ease-in-out;
-          --in-duration: 0.4s;
-          --in-delay: 0.1s;
-          --in-timing-function: ease-out;
-          width: calc( 3 * var(--offset) + var(--square));
-          height: calc( 2 * var(--offset) + var(--square));
-          padding: 0px;
-          margin-left: auto;
-          margin-right: auto;
-          margin-top: 10px;
-          margin-bottom: 30px;
-          position: relative;
-        }
-
-        .loadingspinner div {
-          display: inline-block;
-          background: darkorange;
-          border: none;
-          border-radius: 2px;
-          width: var(--square);
-          height: var(--square);
-          position: absolute;
-          padding: 0px;
-          margin: 0px;
-          font-size: 6pt;
-          color: black;
-        }
-
-        .loadingspinner #square1 {
-          left: calc( 0 * var(--offset) );
-          top: calc( 0 * var(--offset) );
-          animation: square1 var(--duration) var(--delay) var(--timing-function) infinite,
-                      squarefadein var(--in-duration) calc(1 * var(--in-delay)) var(--in-timing-function) both;
-        }
-
-        .loadingspinner #square2 {
-          left: calc( 0 * var(--offset) );
-          top: calc( 1 * var(--offset) );
-          animation: square2 var(--duration) var(--delay) var(--timing-function) infinite,
-                      squarefadein var(--in-duration) calc(1 * var(--in-delay)) var(--in-timing-function) both;
-        }
-
-        .loadingspinner #square3 {
-          left: calc( 1 * var(--offset) );
-          top: calc( 1 * var(--offset) );
-          animation: square3 var(--duration) var(--delay) var(--timing-function) infinite,
-                      squarefadein var(--in-duration) calc(2 * var(--in-delay)) var(--in-timing-function) both;
-        }
-
-        .loadingspinner #square4 {
-          left: calc( 2 * var(--offset) );
-          top: calc( 1 * var(--offset) );
-          animation: square4 var(--duration) var(--delay) var(--timing-function) infinite,
-                      squarefadein var(--in-duration) calc(3 * var(--in-delay)) var(--in-timing-function) both;
-        }
-
-        .loadingspinner #square5 {
-          left: calc( 3 * var(--offset) );
-          top: calc( 1 * var(--offset) );
-          animation: square5 var(--duration) var(--delay) var(--timing-function) infinite,
-                      squarefadein var(--in-duration) calc(4 * var(--in-delay)) var(--in-timing-function) both;
-        }
-
-        @keyframes square1 {
-          0% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 0 * var(--offset) );
-          }
-          8.333% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 1 * var(--offset) );
-          }
-          100% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 1 * var(--offset) );
-          }
-        }
-
-        @keyframes square2 {
-          0% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 1 * var(--offset) );
-          }
-          8.333% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 2 * var(--offset) );
-          }
-          100% {
-            left: calc( 0 * var(--offset) );
-            top: calc( 2 * var(--offset) );
-          }
-        }
     </style>
 </head>
 <body>
-    <div class="container" id="login-container">
-        <h2>Inicio de sesión</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="captcha">Verificación CAPTCHA:</label>
-                <input type="text" id="captchaInput" name="captchaInput" required>
-                <div class="captcha" id="captchaText"></div>
-                <span class="refresh-captcha" onclick="generateCaptcha()">¿No puedes leer? Haz clic aquí para cambiarlo.</span>
-            </div>
-            <button type="submit">Iniciar sesión</button>
-        </form>
-    </div>
-
-    <div class="container hidden" id="menu">
+    <div class="container" id="menu">
         <h1>Bienvenido</h1>
         <p>¿Qué desea hacer?</p>
-        <button onclick="showConverter('mxn')">Convertir de Pesos a Dólares</button>
-        <button onclick="showConverter('usd')">Convertir de Dólares a Pesos</button>
+        <button onclick="showConverter('usd')">Convertir Dólares a Pesos</button>
+        <button onclick="showConverter('mxn')">Convertir Pesos a Dólares</button>
     </div>
 
     <div class="container hidden" id="converter">
         <h1 id="converterTitle"></h1>
         <div class="form-group">
             <label for="amount">Cantidad:</label>
-            <input type="number" id="amount" name="amount" required>
+            <input type="number" id="amount" placeholder="Ingresa la cantidad" />
         </div>
-        <button onclick="convert()">Convertir</button>
-        <div class="result-container">
-            <p id="conversionResult"></p>
-            <img id="conversionImage" src="" alt="">
-        </div>
+        <button onclick="convert()">Calcular</button>
     </div>
 
-    <div id="loadingSpinner" class="loadingspinner hidden">
-        <div id="square1"></div>
-        <div id="square2"></div>
-        <div id="square3"></div>
-        <div id="square4"></div>
-        <div id="square5"></div>
+    <div class="container hidden" id="result-container">
+        <h1>Resultado</h1>
+        <p id="result"></p>
+        <img src="g.gif" alt="Animación">
+        <button onclick="goBack()">Regresar</button>
     </div>
 
     <script>
-        function generateCaptcha() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let captcha = '';
-            for (let i = 0; i < 6; i++) {
-                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            document.getElementById('captchaText').textContent = captcha;
+        let conversionType = '';
+
+        function showConverter(type) {
+            conversionType = type;
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('converter').classList.remove('hidden');
+            const title = type === 'usd' 
+                ? 'Convertir Dólares a Pesos Mexicanos' 
+                : 'Convertir Pesos Mexicanos a Dólares';
+            document.getElementById('converterTitle').textContent = title;
         }
 
-        generateCaptcha();
+        function goBack() {
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('converter').classList.add('hidden');
+            document.getElementById('result-container').classList.add('hidden');
+            document.getElementById('result').textContent = '';
+            document.getElementById('amount').value = '';
+        }
 
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const captchaInput = document.getElementById('captchaInput').value;
+        async function getExchangeRate() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+                return data.rates.MXN;
+            } catch (error) {
+                console.error('Error al obtener el tipo de cambio:', error);
+                return null;
+            }
+        }
 
-            const captchaText = document.getElementById('captchaText').textContent;
+        async function convert() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const resultDiv = document.getElementById('result');
 
-            if (captchaInput !== captchaText) {
-                alert('Captcha incorrecto');
+            if (isNaN(amount) || amount <= 0) {
+                resultDiv.textContent = 'Por favor, ingresa una cantidad válida.';
                 return;
             }
 
-            document.getElementById('login-container').classList.add('hidden');
-            document.getElementById('menu').classList.remove('hidden');
-        });
-
-        function showConverter(currency) {
-            document.getElementById('menu').classList.add('hidden');
-            document.getElementById('converter').classList.remove('hidden');
-            
-            const converterTitle = document.getElementById('converterTitle');
-            const conversionResult = document.getElementById('conversionResult');
-            const conversionImage = document.getElementById('conversionImage');
-
-            if (currency === 'mxn') {
-                converterTitle.textContent = 'Convertir de Pesos Mexicanos a Dólares';
-                conversionResult.textContent = 'Introduzca la cantidad en Pesos:';
-                conversionImage.src = 'mxdollar.png';
-            } else if (currency === 'usd') {
-                converterTitle.textContent = 'Convertir de Dólares a Pesos Mexicanos';
-                conversionResult.textContent = 'Introduzca la cantidad en Dólares:';
-                conversionImage.src = 'usd.png';
-            }
-        }
-
-        function convert() {
-            const amount = document.getElementById('amount').value;
-            const currency = document.getElementById('converterTitle').textContent.includes('Pesos') ? 'mxn' : 'usd';
-
-            let result;
-            if (currency === 'mxn') {
-                result = amount * 0.05;  
-            } else {
-                result = amount * 20;  
+            const exchangeRate = await getExchangeRate();
+            if (!exchangeRate) {
+                resultDiv.textContent = 'No se pudo obtener el tipo de cambio. Intenta nuevamente más tarde.';
+                return;
             }
 
-            document.getElementById('conversionResult').textContent = `Resultado: ${result}`;
+            let convertedAmount;
+            if (conversionType === 'usd') {
+                convertedAmount = amount * exchangeRate;
+                resultDiv.textContent = `${amount.toFixed(2)} USD = ${convertedAmount.toFixed(2)} MXN`;
+            } else if (conversionType === 'mxn') {
+                convertedAmount = amount / exchangeRate;
+                resultDiv.textContent = `${amount.toFixed(2)} MXN = ${convertedAmount.toFixed(2)} USD`;
+            }
 
+            document.getElementById('converter').classList.add('hidden');
+            document.getElementById('result-container').classList.remove('hidden');
         }
     </script>
 </body>
